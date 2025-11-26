@@ -5,7 +5,7 @@ require('dotenv').config();
 const connectDB = require('./utils/database');
 const apiRoutes = require('./routes/api');
 
-// Connect to database
+// Connect to MongoDB
 connectDB();
 
 const app = express();
@@ -19,8 +19,10 @@ app.use('/api', apiRoutes);
 
 // Home route
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'Welcome to Data Visualization Dashboard API',
+    status: "running",
+    serverTime: new Date(),
     endpoints: {
       health: '/api/health',
       data: '/api/data',
@@ -31,8 +33,8 @@ app.get('/', (req, res) => {
   });
 });
 
+// Render will set PORT
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
