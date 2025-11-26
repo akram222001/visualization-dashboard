@@ -1,10 +1,11 @@
-import { Card, Table, Badge, Spinner } from 'react-bootstrap';
+import { Card, Table, Badge, Spinner } from "react-bootstrap";
 
 export default function DataTable({ data, loading }) {
+  console.log("data", data);
   const getIntensityVariant = (intensity) => {
-    if (intensity > 50) return 'danger';
-    if (intensity > 25) return 'warning';
-    return 'success';
+    if (intensity > 50) return "danger";
+    if (intensity > 25) return "warning";
+    return "success";
   };
 
   return (
@@ -14,7 +15,7 @@ export default function DataTable({ data, loading }) {
         {loading && <Spinner animation="border" size="sm" />}
       </Card.Header>
       <Card.Body className="p-0">
-        <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+        <div style={{ maxHeight: "600px", overflowY: "auto" }}>
           <Table striped bordered hover responsive className="mb-0">
             <thead className="bg-light position-sticky top-0">
               <tr>
@@ -23,13 +24,57 @@ export default function DataTable({ data, loading }) {
                 <th>Topic</th>
                 <th>Intensity</th>
                 <th>Likelihood</th>
+                <th>Relevance</th>
+                <th>Impact</th>
                 <th>Country</th>
+                <th>Region</th>
+                <th>Pestle</th>
+                <th>Source</th>
+                <th>Published</th>
+                <th>Added</th>
               </tr>
             </thead>
+
             <tbody>
               {data.map((item, index) => (
                 <tr key={item._id || index}>
-                  <td style={{ maxWidth: '300px' }} className="text-truncate" title={item.title}>
+                  <td
+                    style={{ maxWidth: "300px" }}
+                    className="text-truncate"
+                    title={item.title}
+                  >
+                    {item.title}
+                  </td>
+                  <td>
+                    <Badge bg="primary">{item.sector}</Badge>
+                  </td>
+                  <td>{item.topic}</td>
+                  <td>
+                    <Badge bg={getIntensityVariant(item.intensity)}>
+                      {item.intensity}
+                    </Badge>
+                  </td>
+                  <td>{item.likelihood}</td>
+                  <td>{item.relevance}</td>
+                  <td>{item.impact || "-"}</td>
+                  <td>{item.country}</td>
+                  <td>{item.region}</td>
+                  <td>{item.pestle}</td>
+                  <td>{item.source}</td>
+                  <td>{item.published}</td>
+                  <td>{item.added}</td>
+                </tr>
+              ))}
+            </tbody>
+
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={item._id || index}>
+                  <td
+                    style={{ maxWidth: "300px" }}
+                    className="text-truncate"
+                    title={item.title}
+                  >
                     {item.title}
                   </td>
                   <td>
@@ -47,7 +92,7 @@ export default function DataTable({ data, loading }) {
               ))}
             </tbody>
           </Table>
-          
+
           {data.length === 0 && !loading && (
             <div className="text-center py-5 text-muted">
               No data found with current filters
