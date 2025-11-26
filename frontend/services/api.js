@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+if (!API_BASE) {
+  console.error("Error: NEXT_PUBLIC_API_BASE_URL is not defined in .env.local");
+}
+
 export const api = {
   // Get data with filters
   getData: (params) => axios.get(`${API_BASE}/data`, { params }),
